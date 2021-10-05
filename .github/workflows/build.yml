@@ -1,0 +1,26 @@
+name: "Build"
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v14
+      with:
+        extra_nix_config: |
+          experimental-features = nix-command flakes
+          substituters = https://cache.nixos.org https://nixcache.reflex-frp.org https://hydra.iohk.io https://cache.nixos.org/
+          trusted-public-keys = ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+    - uses: cachix/cachix-action@v10
+      with:
+        name: vaibhavsagar
+        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
+    - run: nix-build glitch.nix
+    - if: ${{ github.ref == 'refs/heads/main' }}
+      run: ./.github/workflows/update_pages.sh
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        TARGET_REPO: ${{ github.repository }}
+        RUN_NUMBER: ${{ github.run_number }}
+        WORKFLOW: ${{ github.workflow }}
