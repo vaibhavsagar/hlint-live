@@ -31,7 +31,7 @@ let
       -W QUIET \
       ${project.ghcjs.hlint-live}/bin/hlint-live.jsexe/all.js
   '';
-in pkgs.runCommand "glitch" {} ''
+in pkgs.runCommand "static-site" {} ''
   mkdir -p $out
   cp ${html} $out/index.html
   cp ${minifiedJs} $out/all.js

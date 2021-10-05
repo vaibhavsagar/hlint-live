@@ -16,7 +16,7 @@ jobs:
       with:
         name: vaibhavsagar
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-    - run: nix-build glitch.nix
+    - run: nix-build static-site.nix
     - if: ${{ github.ref == 'refs/heads/main' }}
       run: ./.github/workflows/update_pages.sh
       env:
