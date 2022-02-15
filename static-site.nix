@@ -24,12 +24,12 @@ let
   };
   minifiedJs = pkgs.runCommand "all.js" {} ''
     ${pkgs.closurecompiler}/bin/closure-compiler \
-      --externs=${project.ghcjs.hlint-live}/bin/hlint-live.jsexe/all.js.externs \
+      --externs=${project.ghcjs8_10.hlint-live}/bin/hlint-live.jsexe/all.js.externs \
       --jscomp_off=checkVars \
       --js_output_file="$out" \
       -O ADVANCED \
       -W QUIET \
-      ${project.ghcjs.hlint-live}/bin/hlint-live.jsexe/all.js
+      ${project.ghcjs8_10.hlint-live}/bin/hlint-live.jsexe/all.js
   '';
 in pkgs.runCommand "static-site" {} ''
   mkdir -p $out

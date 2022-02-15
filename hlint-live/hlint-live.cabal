@@ -21,7 +21,7 @@ executable hlint-live
   main-is:             Main.hs
   other-modules:       HLintPath
   -- other-extensions:
-  build-depends:       base >=4.12 && <4.13
+  build-depends:       base >=4.12 && <5
                      , aeson
                      , file-embed
                      , filepath
